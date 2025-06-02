@@ -2,7 +2,7 @@
 
 A web-based machine learning application that predicts a user's risk of heart disease based on medical inputs, using the UCI Heart Disease dataset. Built with Flask, scikit-learn, and modern web technologies.
 
-![Screenshot](static/screenshot.png) <!-- Replace or remove if not available -->
+![Screenshot](static/screenshot.png)
 
 ---
 
