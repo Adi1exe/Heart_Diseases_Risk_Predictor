@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Risk Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='indexstyles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/about" class="about-btn">
+                <span class="about-icon">ℹ️</span>
+                <span>About</span>
+            </a>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="theme-icon">🌙</span>
+                <span id="theme-text">Dark</span>
+            </button>
+            <h1>Heart Disease Risk Predictor</h1>
+            <p class="subtitle">Advanced AI-powered cardiovascular risk assessment</p>
+        </div>
+
+        <div class="form-container">
+            <form method="POST" action="/predict" id="heartForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="age">Age (years)
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Patient's age in years</span>
+                            </span>
+                        </label>
+                        <input type="number" id="age" name="age" min="1" max="120" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sex">Sex
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Biological sex of the patient</span>
+                            </span>
+                        </label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="sex" value="0" required>
+                                <span>Female</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="sex" value="1" required>
+                                <span>Male</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cp">Chest Pain Type
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Type of chest pain experienced</span>
+                            </span>
+                        </label>
+                        <select id="cp" name="cp" required>
+                            <option value="">Select type</option>
+                            <option value="0">Typical Angina</option>
+                            <option value="1">Atypical Angina</option>
+                            <option value="2">Non-Anginal Pain</option>
+                            <option value="3">Asymptomatic</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trestbps">Resting Blood Pressure (mm Hg)
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Blood pressure at rest (normal: 120/80)</span>
+                            </span>
+                        </label>
+                        <input type="number" id="trestbps" name="trestbps" min="80" max="250" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chol">Cholesterol (mg/dl)
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Serum cholesterol level (normal: <200)</span>
+                            </span>
+                        </label>
+                        <input type="number" id="chol" name="chol" min="100" max="600" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fbs">Fasting Blood Sugar > 120 mg/dl
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Is fasting blood sugar greater than 120 mg/dl?</span>
+                            </span>
+                        </label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="fbs" value="0" required>
+                                <span>No</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="fbs" value="1" required>
+                                <span>Yes</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="restecg">Resting ECG Results
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Electrocardiographic results at rest</span>
+                            </span>
+                        </label>
+                        <select id="restecg" name="restecg" required>
+                            <option value="">Select result</option>
+                            <option value="0">Normal</option>
+                            <option value="1">ST-T Wave Abnormality</option>
+                            <option value="2">Left Ventricular Hypertrophy</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thalach">Maximum Heart Rate Achieved
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Highest heart rate during exercise test</span>
+                            </span>
+                        </label>
+                        <input type="number" id="thalach" name="thalach" min="60" max="220" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exang">Exercise Induced Angina
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Chest pain induced by exercise</span>
+                            </span>
+                        </label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="exang" value="0" required>
+                                <span>No</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="exang" value="1" required>
+                                <span>Yes</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="oldpeak">ST Depression (oldpeak)
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">ST depression induced by exercise relative to rest</span>
+                            </span>
+                        </label>
+                        <input type="number" id="oldpeak" name="oldpeak" min="0" max="10" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slope">ST Segment Slope
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Slope of peak exercise ST segment</span>
+                            </span>
+                        </label>
+                        <select id="slope" name="slope" required>
+                            <option value="">Select slope</option>
+                            <option value="0">Upsloping</option>
+                            <option value="1">Flat</option>
+                            <option value="2">Downsloping</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ca">Number of Major Vessels (0-3)
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Number of major vessels colored by fluoroscopy</span>
+                            </span>
+                        </label>
+                        <select id="ca" name="ca" required>
+                            <option value="">Select number</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thal">Thalassemia
+                            <span class="info-tooltip">
+                                <span class="info-icon">?</span>
+                                <span class="tooltip">Blood disorder affecting hemoglobin</span>
+                            </span>
+                        </label>
+                        <select id="thal" name="thal" required>
+                            <option value="">Select type</option>
+                            <option value="1">Fixed Defect</option>
+                            <option value="2">Normal</option>
+                            <option value="3">Reversible Defect</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Predict Heart Disease Risk
+                </button>
+            </form>
+
+            {% if prediction %}
+                <div class="result {{ 'positive' if prediction == 'High Risk' else 'negative' }}">
+                    <h2>Risk Assessment: {{ prediction }}</h2>
+                    {% if prediction == 'High Risk' %}
+                        <p>Please consult with a healthcare professional for further evaluation.</p>
+                    {% else %}
+                        <p>Low risk detected. Continue maintaining a healthy lifestyle!</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeText = document.getElementById('theme-text');
+            const themeIcon = document.querySelector('.theme-icon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeText.textContent = 'Dark';
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeText.textContent = 'Light';
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-text').textContent = 'Light';
+                document.querySelector('.theme-icon').textContent = '☀️';
+            }
+        });
+
+        // Form validation and enhancement
+        document.getElementById('heartForm').addEventListener('submit', function(e) {
+            const inputs = this.querySelectorAll('input[required], select[required]');
+            let allValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    allValid = false;
+                    input.style.borderColor = '#ef4444';
+                } else {
+                    input.style.borderColor = 'var(--border)';
+                }
+            });
+            
+            if (!allValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+            }
+        });
+
+        // Add smooth animations for radio buttons
+        document.querySelectorAll('.radio-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radioGroup = this.closest('.radio-group');
+                radioGroup.querySelectorAll('.radio-option').forEach(opt => {
+                    opt.style.background = 'var(--bg-secondary)';
+                    opt.style.color = 'var(--text-primary)';
+                });
+                
+                setTimeout(() => {
+                    if (this.querySelector('input').checked) {
+                        this.style.background = 'var(--accent)';
+                        this.style.color = 'white';
+                    }
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

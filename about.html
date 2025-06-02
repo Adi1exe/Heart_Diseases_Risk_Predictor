@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Heart Disease Risk Predictor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aboutstyles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('home') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Predictor</span>
+            </a>
+            <button class="theme-toggle">
+                <i class="fas fa-moon theme-icon"></i>
+                <span id="theme-text">Dark</span>
+            </button>
+            <h1>About This Project</h1>
+            <p class="subtitle">Learn more about the Heart Disease Risk Predictor and connect with the developer</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2>
+                    <i class="fas fa-heartbeat card-icon"></i>
+                    Project Overview
+                </h2>
+                <p>
+                    The Heart Disease Risk Predictor is an advanced machine learning application that analyzes cardiovascular risk factors using the renowned UCI Heart Disease dataset. This tool leverages artificial intelligence to provide quick, preliminary assessments of heart disease risk based on clinical parameters.
+                </p>
+                <p>
+                    Built with modern web technologies and a focus on user experience, this application serves as both a practical health screening tool and a demonstration of machine learning in healthcare applications.
+                </p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                                            <span class="stat-number">303</span>
+                    <span class="stat-label">Data Samples</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">14</span>
+                    <span class="stat-label">Features Analyzed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Prediction Accuracy</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">ML Model</span>
+                </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <i class="fas fa-code card-icon"></i>
+                    Technologies Used
+                </h2>
+                <p>This project combines several powerful technologies for both backend and frontend development, machine learning, and UI design.</p>
+                <div class="tech-grid">
+                    <div class="tech-item"><i class="fab fa-python"></i>Python</div>
+                    <div class="tech-item"><i class="fab fa-js-square"></i>JavaScript</div>
+                    <div class="tech-item"><i class="fas fa-flask"></i>Flask</div>
+                    <div class="tech-item"><i class="fab fa-bootstrap"></i>Bootstrap</div>
+                    <div class="tech-item"><i class="fas fa-brain"></i>scikit-learn</div>
+                    <div class="tech-item"><i class="fas fa-code"></i>HTML5 & CSS3</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <i class="fas fa-user card-icon"></i>
+                    Connect with Me
+                </h2>
+                <p>Feel free to reach out or explore my other projects and profiles.</p>
+                <div class="social-links">
+                    <a href="https://github.com/Adi1exe" target="_blank" class="social-link github">
+                        <i class="fab fa-github"></i>GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/aditya-dolas-992a44265/" target="_blank" class="social-link linkedin">
+                        <i class="fab fa-linkedin"></i>LinkedIn
+                    </a>
+                    <a href="mailto:adityadolas.dev@gmail.com" class="social-link email">
+                        <i class="fas fa-envelope"></i>Email
+                    </a>
+                    <a href="adityadolas.netlify.app" target="_blank" class="social-link portfolio">
+                        <i class="fas fa-globe"></i>Portfolio
+                    </a>
+                    <a href="https://x.com/DolasAditya" target="_blank" class="social-link twitter">
+                        <i class="fab fa-twitter"></i>X/Twitter
+                    </a>
+                    <a href="https://www.instagram.com/heyyyyadi/" target="_blank" class="social-link instagram">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const themeToggleBtn = document.querySelector('.theme-toggle');
+        const themeIcon = document.querySelector('.theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeText.textContent = 'Light';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeText.textContent = 'Dark';
+            }
+        }
+
+        function applyTransition() {
+            document.documentElement.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            setTimeout(() => {
+                document.documentElement.style.transition = '';
+            }, 300);
+        }
+
+        function toggleTheme() {
+            applyTransition();
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeText.textContent = 'Dark';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeText.textContent = 'Light';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Attach the event listener safely
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', toggleTheme);
+        }
+
+        // Load theme on page load
+        loadTheme();
+    });
+</script>
+</body>
+</html>
