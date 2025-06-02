@@ -59,6 +59,11 @@ The **Heart Disease Risk Predictor** is designed to provide quick, AI-powered ri
     pip install -r requirements.txt
     ```
 
+3. **Run main.py**:
+    ```bash
+    python main.py (important)
+    ```
+    
 3. **Run the app**:
     ```bash
     python app.py
